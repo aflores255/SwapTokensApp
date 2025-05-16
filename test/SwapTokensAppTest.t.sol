@@ -22,14 +22,16 @@ contract SwapTokensAppTest is Test {
         swapTokensApp = new SwapTokensApp(routerAddress);
     }
 
+    // Ensure router assignation
     function testInitialDeploy() public view {
         assert(swapTokensApp.RouterV2Address() == routerAddress);
     }
 
+    // Test swap 2 tokens directly
     function testSwapTokensShortPath() public {
         uint256 amountIn_ = 10 * 1e6;
         uint256 amountOutMin_ = 9 * 1e6;
-        uint256 deadline_ = 1744303346 + 6000;
+        uint256 deadline_ = block.timestamp + 6000;
         address[] memory path_ = new address[](2);
         path_[0] = USDC;
         path_[1] = USDT;
@@ -53,10 +55,12 @@ contract SwapTokensAppTest is Test {
         vm.stopPrank();
     }
 
+    // Test swap using 3 pairs
+
     function testSwapTokensLongPath() public {
         uint256 amountIn_ = 10 * 1e6;
         uint256 amountOutMin_ = 0.00001 * 1e8;
-        uint256 deadline_ = 1744303346 + 6000;
+        uint256 deadline_ = block.timestamp + 6000;
         address[] memory path_ = new address[](3);
 
         path_[0] = USDT;
